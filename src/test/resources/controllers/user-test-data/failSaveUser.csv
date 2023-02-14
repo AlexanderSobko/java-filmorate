@@ -1,0 +1,4 @@
+{ "login": "dolore ullamco",  "email": "yandex@mail.ru",  "birthday": "2446-08-20"}|You've not born yet)
+{ "login": "doloreUllamco",  "name": "",  "email": "mail.ru",  "birthday": "1980-08-20"}|Mast be a valid email address!
+{ "login": "dolore Ullamco",  "name": "",  "email": "sd@mail.ru",  "birthday": "1980-08-20"}|Login mustn't have any whitespaces!
+{ "login": "",  "name": "",  "email": "sd@mail.ru",  "birthday": "1980-08-20"}|Login mustn't be empty!

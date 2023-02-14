@@ -1,0 +1,4 @@
+{"name": "","description": "Description","releaseDate": "1900-03-25","duration": 200}|Films name can't be empty!
+{"name": "Film name","description": "Пятеро друзей ( комик-группа «Шарло»), приезжают в город Бризуль. Здесь они хотят разыскать господина Огюста Куглова, который задолжал им деньги, а именно 20 миллионов. о Куглов, который за время «своего отсутствия», стал кандидатом Коломбани.","releaseDate": "1900-03-25","duration": 200}|Description must be less than 200 characters!
+{"name": "Name","description": "Description","releaseDate": "1890-03-25","duration": 200}|The release date must be after December 28th 1895
+{"name": "Name","description": "Descrition","releaseDate": "1980-03-25","duration": -200}|Duration can't be negative!
