@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class UserControllerTest {
 
     private final String basePath = "http://localhost:8080/api/v1/users/";
-    private MockMvc mockMvc;
+    private final MockMvc mockMvc;
 
     @Autowired
     UserControllerTest(MockMvc mockMvc) {
@@ -57,7 +57,7 @@ class UserControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
-                 .andExpect(MockMvcResultMatchers.content().string(containsString(expectedResponse)));
+                .andExpect(MockMvcResultMatchers.content().string(containsString(expectedResponse)));
     }
 
 
