@@ -23,7 +23,7 @@ public class UserService {
 
     public User save(User user) {
         if (userRepository.exists(user)) {
-            throw new AlreadyExistsException("user", user.getId());
+            throw new AlreadyExistsException("Пользователь", user.getId());
         } else {
             User savedUser = userRepository.save(user);
             log.info("User with id({}) successfully saved!",savedUser.getId());
@@ -37,7 +37,7 @@ public class UserService {
             log.info("User with id({}) successfully updated!", updatedUser.getId());
             return updatedUser;
         } else {
-            throw new NotExistsException("user", user.getId());
+            throw new NotExistsException("Пользователь", user.getId());
         }
     }
 

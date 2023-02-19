@@ -1,27 +1,29 @@
 package ru.yandex.practicum.filmorate.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.*;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 @Data
 @Component
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
 
-    private static Long currentId = 0L;
-    private long id;
-    @NotBlank(message = "Email can't be blank!")
-    @Email(message = "Mast be a valid email address!")
-    private String email;
-    @NotEmpty(message = "Login mustn't be empty!")
-    @Pattern(regexp = "\\w*", message = "Login mustn't have any whitespaces!")
-    private String login;
-    private String name;
-    @Past(message = "You've not born yet)")
-    private LocalDate birthday;
+    static Long currentId = 0L;
+    long id;
+    @NotBlank(message = "Электронная почта не может быть пустой!")
+    @Email(message = "Электронная почта должна содержать символ @!")
+    String email;
+    @NotEmpty(message = "Логин не может быть пустым!")
+    @Pattern(regexp = "\\w*", message = "Логин не может содержать пробелы!")
+    String login;
+    String name;
+    @Past(message = "Дата рождения не может быть в будущем!")
+    LocalDate birthday;
 
     public User(String email, String login, String name, LocalDate birthday) {
         this.id = currentId;

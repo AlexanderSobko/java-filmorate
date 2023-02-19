@@ -21,9 +21,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class UserControllerTest {
 
     private final String basePath = "http://localhost:8080/api/v1/users/";
-    private final String dummyData = "{\"name\":\"nisi eiusmod\",\"description\":\"adipisicing\",\"releaseDate\":\"1967-03-25\",\"duration\":1}";
-    @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    UserControllerTest(MockMvc mockMvc) {
+        this.mockMvc = mockMvc;
+    }
 
     @Test
     void getUsers() throws Exception {
@@ -41,7 +44,7 @@ class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().is(201))
                 .andExpect(MockMvcResultMatchers.content().string(containsString(expectedResponse)));
     }
 
@@ -54,7 +57,7 @@ class UserControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.content().string(containsString(expectedResponse)));
+                 .andExpect(MockMvcResultMatchers.content().string(containsString(expectedResponse)));
     }
 
 
@@ -66,7 +69,7 @@ class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().is(201));
         mockMvc.perform(patch(basePath)
                         .content(fileJson)
                         .contentType(MediaType.APPLICATION_JSON)

@@ -4,10 +4,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.server.ResponseStatusException;
 import ru.yandex.practicum.filmorate.models.Film;
 import ru.yandex.practicum.filmorate.services.FilmService;
 
@@ -21,7 +20,7 @@ public class FilmController {
 
     @PostMapping
     public ResponseEntity<Film> saveFilm(@Valid @RequestBody Film film) {
-        return ResponseEntity.ok().body(filmService.save(film));
+        return ResponseEntity.status(201).body(filmService.save(film));
     }
 
     @PatchMapping
@@ -35,8 +34,10 @@ public class FilmController {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseStatusException handleValidationException(MethodArgumentNotValidException exception) {
-        return new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
+    protected ErrorResponse handleValidationException(MethodArgumentNotValidException exception) {
+        return ErrorResponse.builder(exception,HttpStatus.BAD_REQUEST, exception.getMessage())
+                .header("Content-Type","application/json;charset=UTF-8")
+                .build();
     }
 
     @Autowired

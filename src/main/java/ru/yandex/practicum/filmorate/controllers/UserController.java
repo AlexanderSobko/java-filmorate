@@ -4,9 +4,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import ru.yandex.practicum.filmorate.models.User;
 import ru.yandex.practicum.filmorate.services.UserService;
 
@@ -20,7 +20,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> saveUser(@Valid @RequestBody User user) {
-        return ResponseEntity.ok().body(userService.save(user));
+        return ResponseEntity.status(201).body(userService.save(user));
     }
 
     @PatchMapping
@@ -34,8 +34,10 @@ public class UserController {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseStatusException handleValidationException(MethodArgumentNotValidException exception) {
-        return new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
+    protected ErrorResponse handleValidationException(MethodArgumentNotValidException exception) {
+        return ErrorResponse.builder(exception,HttpStatus.BAD_REQUEST, exception.getMessage())
+                .header("Content-Type","application/json;charset=UTF-8")
+                .build();
     }
 
     @Autowired

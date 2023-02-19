@@ -23,7 +23,7 @@ public class FilmService {
 
     public Film save(Film film) {
         if (filmRepository.exists(film)) {
-            throw new AlreadyExistsException("film", film.getId());
+            throw new AlreadyExistsException("Фильм", film.getId());
         } else {
             Film savedFilm = filmRepository.save(film);
             log.info("Film with id({}) successfully saved!", savedFilm.getId());
@@ -38,7 +38,7 @@ public class FilmService {
             log.info("Film with id({}) successfully updated!", updatedFilm.getId());
             return updatedFilm;
         } else {
-            throw new NotExistsException("film", film.getId());
+            throw new NotExistsException("Фильм", film.getId());
         }
     }
 

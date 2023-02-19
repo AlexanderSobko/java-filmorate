@@ -3,6 +3,6 @@ package ru.yandex.practicum.filmorate.exceptions;
 public class AlreadyExistsException extends RuntimeException {
 
     public AlreadyExistsException(String objectName, Long id) {
-        super("The %s with id(%d) already exists!".formatted(objectName, id));
+        super("%s с таким id(%d) уже существет!".formatted(objectName, id));
     }
 }
