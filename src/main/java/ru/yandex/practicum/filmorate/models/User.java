@@ -1,11 +1,11 @@
 package ru.yandex.practicum.filmorate.models;
 
-import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Data
