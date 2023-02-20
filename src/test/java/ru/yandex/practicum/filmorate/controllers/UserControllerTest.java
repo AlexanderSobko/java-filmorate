@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class UserControllerTest {
 
-    private final String basePath = "http://localhost:8080/api/v1/users/";
+    private final String basePath = "http://localhost:8080/api/v1/users";
     private final MockMvc mockMvc;
 
     @Autowired

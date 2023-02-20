@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class FilmControllerTest {
 
-    private final String basePath = "http://localhost:8080/api/v1/films/";
+    private final String basePath = "http://localhost:8080/api/v1/films";
     @Autowired
     private MockMvc mockMvc;
 
