@@ -1,1 +1,1 @@
-{"id":1000,"email":"mail@mail.ru","login":"dolore","name":"Nick Name","birthday":"1946-08-20"}|Пользователь c таким id(1000) не существует!
+{"id":1000,"email":"mail@mail.ru","login":"dolore","name":"Nick Name","birthday":"1946-08-20"}|{"message":"Пользователь c таким id(1000) не существует!"}
