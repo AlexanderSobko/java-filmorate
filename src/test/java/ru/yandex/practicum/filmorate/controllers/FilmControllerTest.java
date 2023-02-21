@@ -65,7 +65,7 @@ class FilmControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().is(201));
-        mockMvc.perform(patch(basePath)
+        mockMvc.perform(put(basePath)
                         .content(fileJson)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -77,7 +77,7 @@ class FilmControllerTest {
     @ParameterizedTest
     @CsvFileSource(resources = "/controllers/film-test-data/failUpdateFilm.csv", delimiter = '|')
     void failUpdateFilm(String fileJson, String expectedResponse) throws Exception {
-        mockMvc.perform(patch(basePath)
+        mockMvc.perform(put(basePath)
                         .content(fileJson)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

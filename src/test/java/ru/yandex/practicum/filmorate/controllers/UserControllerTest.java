@@ -12,7 +12,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -70,7 +69,7 @@ class UserControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().is(201));
-        mockMvc.perform(patch(basePath)
+        mockMvc.perform(put(basePath)
                         .content(fileJson)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -82,7 +81,7 @@ class UserControllerTest {
     @ParameterizedTest
     @CsvFileSource(resources = "/controllers/user-test-data/failUpdateUser.csv", delimiter = '|')
     void failUpdateUser(String fileJson, String expectedResponse) throws Exception {
-        mockMvc.perform(patch(basePath)
+        mockMvc.perform(put(basePath)
                         .content(fileJson)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

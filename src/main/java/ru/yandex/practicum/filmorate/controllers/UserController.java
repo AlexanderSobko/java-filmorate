@@ -21,7 +21,7 @@ public class UserController {
         return ResponseEntity.status(201).body(userService.save(user));
     }
 
-    @PatchMapping
+    @PutMapping
     public ResponseEntity<User> updateUser(@Valid @RequestBody User user) {
         return ResponseEntity.ok().body(userService.updateUser(user));
     }

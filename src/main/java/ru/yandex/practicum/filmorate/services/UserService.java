@@ -25,6 +25,9 @@ public class UserService {
         if (userRepository.exists(user)) {
             throw new AlreadyExistsException("Пользователь", user.getId());
         } else {
+            if (user.getName().isBlank()) {
+                user.setName(user.getLogin());
+            }
             User savedUser = userRepository.save(user);
             log.info("User with id({}) successfully saved!",savedUser.getId());
             return savedUser;
@@ -33,6 +36,9 @@ public class UserService {
 
     public User updateUser(User user) {
         if (userRepository.exists(user)) {
+            if (user.getName().isBlank()) {
+                user.setName(user.getLogin());
+            }
             User updatedUser = userRepository.save(user);
             log.info("User with id({}) successfully updated!", updatedUser.getId());
             return updatedUser;

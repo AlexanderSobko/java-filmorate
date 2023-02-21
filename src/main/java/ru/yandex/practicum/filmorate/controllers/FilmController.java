@@ -22,7 +22,7 @@ public class FilmController {
         return ResponseEntity.status(201).body(filmService.save(film));
     }
 
-    @PatchMapping
+    @PutMapping
     public ResponseEntity<Film> updateFilm(@Valid @RequestBody Film film) {
         return ResponseEntity.ok().body(filmService.updateFilm(film));
     }
