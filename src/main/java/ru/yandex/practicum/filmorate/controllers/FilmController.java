@@ -33,10 +33,10 @@ public class FilmController {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<String> handleValidationException(MethodArgumentNotValidException exception) {
+    protected ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException exception) {
         return ResponseEntity.badRequest()
                 .header("Content-Type", "application/json;charset=UTF-8")
-                .body(exception.getMessage());
+                .body(exception.getBindingResult().getAllErrors());
     }
 
     @Autowired
