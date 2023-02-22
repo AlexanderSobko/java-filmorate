@@ -28,6 +28,10 @@ public class UserService {
             if (user.getName() == null) {
                 user.setName(user.getLogin());
             }
+            if (user.getId() == null) {
+                user.setId(User.currentId);
+                User.currentId++;
+            }
             User savedUser = userRepository.save(user);
             log.info("User with id({}) successfully saved!",savedUser.getId());
             return savedUser;

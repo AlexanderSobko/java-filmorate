@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
 
-    static Long currentId = 0L;
+    static public Long currentId = 0L;
     long id;
     @NotBlank(message = "Электронная почта не может быть пустой!")
     @Email(message = "Электронная почта должна содержать символ @!")
@@ -25,19 +25,8 @@ public class User {
     @Past(message = "Дата рождения не может быть в будущем!")
     LocalDate birthday;
 
-    public User(String email, String login, String name, LocalDate birthday) {
-        this.id = currentId;
-        currentId++;
-        this.email = email;
-        this.login = login;
-        this.name = name;
-        this.birthday = birthday;
+    public Long getId() {
+        return id;
     }
-
-    public User() {
-        this.id = currentId;
-        currentId++;
-    }
-
 
 }
