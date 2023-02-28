@@ -1,0 +1,6 @@
+{ "login": "dolore ullamco",  "email": "yandex@mail.ru",  "birthday": "2446-08-20"}|Дата рождения не может быть в будущем!
+{ "login": "doloreUllamco",  "name": "",  "email": "",  "birthday": "1980-08-20"}|Электронная почта не может быть пустой!
+{ "login": "doloreUllamco",  "name": "",  "email": "mail.ru",  "birthday": "1980-08-20"}|Электронная почта должна содержать символ @!
+{ "login": "dolore Ullamco",  "name": "",  "email": "sd@mail.ru",  "birthday": "1980-08-20"}|Логин не может содержать пробелы!
+{ "login": "",  "name": "",  "email": "sd@mail.ru",  "birthday": "1980-08-20"}|Логин не может быть пустым!
+{ "login": "dolore ullamco",  "email": "",  "birthday": "2000-08-20"}|Электронная почта не может быть пустой!
