@@ -1,12 +1,16 @@
 package ru.yandex.practicum.filmorate.models;
 
+import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Component
@@ -24,9 +28,22 @@ public class User {
     String name;
     @Past(message = "Дата рождения не может быть в будущем!")
     LocalDate birthday;
+    Set<Long> friends = new HashSet<>();
 
     public Long getId() {
         return id;
+    }
+
+    public void addFriend(Long id) {
+        friends.add(id);
+    }
+
+    public List<Long> getFriends() {
+        return new ArrayList<>(friends);
+    }
+
+    public void deleteFriend(Long id) {
+        friends.remove(id);
     }
 
 }

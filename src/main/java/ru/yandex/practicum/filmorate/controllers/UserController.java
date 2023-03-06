@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.models.User;
 import ru.yandex.practicum.filmorate.services.UserService;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,6 +29,31 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok().body(userService.getAllUsers());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(userService.getUser(id));
+    }
+
+    @PutMapping("/{id}/friends/{friendId}")
+    public ResponseEntity<String> addFriend(@PathVariable Long id, @PathVariable Long friendId) {
+        return ResponseEntity.ok().body(userService.addFriend(id, friendId));
+    }
+
+    @DeleteMapping("/{id}/friends/{friendId}")
+    public ResponseEntity<String> deleteFriend(@PathVariable Long id, @PathVariable Long friendId) {
+        return ResponseEntity.ok().body(userService.deleteFriend(id, friendId));
+    }
+
+    @GetMapping("/{id}/friends")
+    public ResponseEntity<List<User>> getFriendList(@PathVariable Long id) {
+        return ResponseEntity.ok().body(userService.getFriendList(id));
+    }
+
+    @GetMapping("/{id}/friends/common/{otherId}")
+    public ResponseEntity<List<User>> getCommonFriends(@PathVariable Long id, @PathVariable Long otherId) {
+        return ResponseEntity.ok().body(userService.getCommonFriends(id, otherId));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
