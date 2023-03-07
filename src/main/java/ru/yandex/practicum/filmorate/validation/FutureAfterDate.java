@@ -1,7 +1,7 @@
 package ru.yandex.practicum.filmorate.validation;
 
-import jakarta.validation.Constraint;
-import jakarta.validation.Payload;
+import javax.validation.Constraint;
+import javax.validation.Payload;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.lang.annotation.*;

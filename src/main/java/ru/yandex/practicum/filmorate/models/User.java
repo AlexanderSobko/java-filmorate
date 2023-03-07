@@ -1,6 +1,6 @@
 package ru.yandex.practicum.filmorate.models;
 
-import jakarta.validation.constraints.*;
+import javax.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
