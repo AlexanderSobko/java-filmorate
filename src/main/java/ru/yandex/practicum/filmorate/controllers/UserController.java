@@ -1,17 +1,18 @@
 package ru.yandex.practicum.filmorate.controllers;
 
-import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.models.User;
 import ru.yandex.practicum.filmorate.services.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
@@ -61,10 +62,5 @@ public class UserController {
         return ResponseEntity.badRequest()
                 .header("Content-Type", "application/json;charset=UTF-8")
                 .body(exception.getBindingResult().getAllErrors());
-    }
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
     }
 }

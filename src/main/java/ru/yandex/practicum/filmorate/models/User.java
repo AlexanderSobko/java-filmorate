@@ -16,8 +16,6 @@ import java.util.Set;
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
-
-    static public Long currentId = 1L;
     Long id;
     @NotBlank(message = "Электронная почта не может быть пустой!")
     @Email(message = "Электронная почта должна содержать символ @!")

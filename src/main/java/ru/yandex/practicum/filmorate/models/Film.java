@@ -22,8 +22,6 @@ import java.util.Set;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Film {
-
-    public static long currentId = 1L;
     Long id;
     @NotBlank(message = "Название не может быть пустым!")
     String name;
@@ -33,7 +31,6 @@ public class Film {
     LocalDate releaseDate;
     @Positive(message = "Продолжительность фильма должна быть положительной!")
     long duration;
-
     Set<Long> likes = new HashSet<>();
 
     public void addLike(Long userId) {
@@ -42,13 +39,6 @@ public class Film {
 
     public List<Long> getLikes() {
         return new ArrayList<>(likes);
-    }
-
-    public Film(String name, String description, LocalDate releaseDate, long duration) {
-        this.name = name;
-        this.description = description;
-        this.releaseDate = releaseDate;
-        this.duration = duration;
     }
 
 }

@@ -11,7 +11,9 @@ import java.util.Map;
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
 
-    Map<Long, Film> innerStorage;
+    private static Long currentId = 1L;
+
+    private final Map<Long, Film> innerStorage;
 
     {
         innerStorage = new HashMap<>();
@@ -48,5 +50,16 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Film findById(long id) {
         return innerStorage.get(id);
     }
+
+    @Override
+    public long getCurrentId() {
+        return currentId;
+    }
+
+    @Override
+    public void incrementCurrentId() {
+        currentId++;
+    }
+
 
 }

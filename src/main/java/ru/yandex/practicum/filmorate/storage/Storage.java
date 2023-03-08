@@ -10,5 +10,8 @@ public interface Storage<T> {
     List<T> findAll();
     boolean exists(long id);
     T findById(long id);
+    long getCurrentId();
+    void incrementCurrentId();
+
 
 }
