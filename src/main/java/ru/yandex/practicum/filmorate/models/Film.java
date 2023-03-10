@@ -1,15 +1,14 @@
 package ru.yandex.practicum.filmorate.models;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.validation.FutureAfterDate;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,7 +17,6 @@ import java.util.Set;
 
 
 @Data
-@Component
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Film {

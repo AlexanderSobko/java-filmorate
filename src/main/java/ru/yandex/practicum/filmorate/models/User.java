@@ -1,11 +1,10 @@
 package ru.yandex.practicum.filmorate.models;
 
-import javax.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-@Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
     Long id;
