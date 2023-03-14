@@ -2,23 +2,25 @@ package ru.yandex.practicum.filmorate.models;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.validation.FutureAfterDate;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Data
-@Component
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Film {
-
-    static long currentId = 0;
-    long id;
+    Long id;
     @NotBlank(message = "Название не может быть пустым!")
     String name;
     @Size(max = 200, message = "Максимальная длина описания — 200 символов!")
@@ -27,18 +29,14 @@ public class Film {
     LocalDate releaseDate;
     @Positive(message = "Продолжительность фильма должна быть положительной!")
     long duration;
+    Set<Long> likes = new HashSet<>();
 
-    public Film(String name, String description, LocalDate releaseDate, long duration) {
-        this.id = currentId;
-        currentId++;
-        this.name = name;
-        this.description = description;
-        this.releaseDate = releaseDate;
-        this.duration = duration;
+    public void addLike(Long userId) {
+        likes.add(userId);
     }
 
-    public Film() {
-        this.id = currentId;
-        currentId++;
+    public List<Long> getLikes() {
+        return new ArrayList<>(likes);
     }
+
 }

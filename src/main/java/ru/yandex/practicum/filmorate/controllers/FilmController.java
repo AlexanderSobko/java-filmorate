@@ -1,7 +1,7 @@
 package ru.yandex.practicum.filmorate.controllers;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/films")
+@RequiredArgsConstructor
 public class FilmController {
 
     private final FilmService filmService;
@@ -32,6 +33,26 @@ public class FilmController {
         return ResponseEntity.ok().body(filmService.getAllFilms());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Film> getFilmById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(filmService.getFilm(id));
+    }
+
+    @PutMapping("/{id}/like/{userId}")
+    public ResponseEntity<String> addLike(@PathVariable Long id, @PathVariable Long userId) {
+        return ResponseEntity.ok().body(filmService.addLike(id, userId));
+    }
+
+    @DeleteMapping("/{id}/like/{userId}")
+    public ResponseEntity<String> deleteLike(@PathVariable Long id, @PathVariable Long userId) {
+        return ResponseEntity.ok().body(filmService.deleteLike(id, userId));
+    }
+
+    @GetMapping("/popular")
+    public ResponseEntity<List<Film>> getTopFilms(@RequestParam(required = false, defaultValue = "10") String count) {
+        return ResponseEntity.ok().body(filmService.getTopFilms(count));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException exception) {
         return ResponseEntity.badRequest()
@@ -39,8 +60,4 @@ public class FilmController {
                 .body(exception.getBindingResult().getAllErrors());
     }
 
-    @Autowired
-    public FilmController(FilmService filmService) {
-        this.filmService = filmService;
-    }
 }
