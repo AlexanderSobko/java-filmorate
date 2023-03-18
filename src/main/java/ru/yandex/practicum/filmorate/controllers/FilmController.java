@@ -1,9 +1,8 @@
 package ru.yandex.practicum.filmorate.controllers;
 
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.models.Film;
 import ru.yandex.practicum.filmorate.services.FilmService;
@@ -13,51 +12,50 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/films")
-@RequiredArgsConstructor
-public class FilmController {
+public class FilmController extends AbstractController<Film, FilmService> {
 
-    private final FilmService filmService;
+    @Autowired
+    public FilmController(FilmService service) {
+        super(service);
+    }
 
+    @Override
     @PostMapping
-    public ResponseEntity<Film> saveFilm(@Valid @RequestBody Film film) {
-        return ResponseEntity.status(201).body(filmService.save(film));
+    public ResponseEntity<Film> save(@Valid @RequestBody Film film) {
+        return ResponseEntity.status(201).body(service.save(film));
     }
 
+    @Override
     @PutMapping
-    public ResponseEntity<Film> updateFilm(@Valid @RequestBody Film film) {
-        return ResponseEntity.ok().body(filmService.updateFilm(film));
+    public ResponseEntity<Film> update(@Valid @RequestBody Film film) {
+        return ResponseEntity.ok().body(service.update(film));
     }
 
+    @Override
     @GetMapping
-    public ResponseEntity<List<Film>> getFilms() {
-        return ResponseEntity.ok().body(filmService.getAllFilms());
+    public ResponseEntity<List<Film>> getAll() {
+        return ResponseEntity.ok().body(service.getAll());
     }
 
+    @Override
     @GetMapping("/{id}")
-    public ResponseEntity<Film> getFilmById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(filmService.getFilm(id));
+    public ResponseEntity<Film> getById(@PathVariable Integer id) {
+        return ResponseEntity.ok().body(service.get(id));
     }
 
     @PutMapping("/{id}/like/{userId}")
-    public ResponseEntity<String> addLike(@PathVariable Long id, @PathVariable Long userId) {
-        return ResponseEntity.ok().body(filmService.addLike(id, userId));
+    public ResponseEntity<String> addLike(@PathVariable Integer id, @PathVariable Integer userId) {
+        return ResponseEntity.ok().body(service.addLike(id, userId));
     }
 
     @DeleteMapping("/{id}/like/{userId}")
-    public ResponseEntity<String> deleteLike(@PathVariable Long id, @PathVariable Long userId) {
-        return ResponseEntity.ok().body(filmService.deleteLike(id, userId));
+    public ResponseEntity<String> deleteLike(@PathVariable Integer id, @PathVariable Integer userId) {
+        return ResponseEntity.ok().body(service.deleteLike(id, userId));
     }
 
     @GetMapping("/popular")
     public ResponseEntity<List<Film>> getTopFilms(@RequestParam(required = false, defaultValue = "10") String count) {
-        return ResponseEntity.ok().body(filmService.getTopFilms(count));
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException exception) {
-        return ResponseEntity.badRequest()
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .body(exception.getBindingResult().getAllErrors());
+        return ResponseEntity.ok().body(service.getTopFilms(count));
     }
 
 }

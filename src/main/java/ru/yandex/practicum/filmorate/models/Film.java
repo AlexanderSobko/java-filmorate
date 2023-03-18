@@ -1,8 +1,8 @@
 package ru.yandex.practicum.filmorate.models;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import ru.yandex.practicum.filmorate.validation.FutureAfterDate;
 
@@ -11,16 +11,15 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 
 @Data
-@NoArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Film {
-    Long id;
+    Integer id;
     @NotBlank(message = "Название не может быть пустым!")
     String name;
     @Size(max = 200, message = "Максимальная длина описания — 200 символов!")
@@ -29,13 +28,15 @@ public class Film {
     LocalDate releaseDate;
     @Positive(message = "Продолжительность фильма должна быть положительной!")
     long duration;
-    Set<Long> likes = new HashSet<>();
+    Set<Integer> likes;
+    Set<Genre> genres;
+    Mpa mpa;
 
-    public void addLike(Long userId) {
+    public void addLike(Integer userId) {
         likes.add(userId);
     }
 
-    public List<Long> getLikes() {
+    public List<Integer> getLikes() {
         return new ArrayList<>(likes);
     }
 

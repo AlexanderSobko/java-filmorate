@@ -5,13 +5,11 @@ import java.util.List;
 public interface Storage<T> {
 
     T save(T entity);
-    void delete(long id);
+    void delete(int id);
     T update(T entity);
     List<T> findAll();
-    boolean exists(long id);
-    T findById(long id);
-    long getCurrentId();
-    void incrementCurrentId();
+    boolean exists(int id);
+    T findById(int id);
 
 
 }

@@ -3,17 +3,14 @@ package ru.yandex.practicum.filmorate.storage.film;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.models.Film;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
 
-    private static Long currentId = 1L;
+    private static int currentId = 1;
 
-    private final Map<Long, Film> innerStorage;
+    private final Map<Integer, Film> innerStorage;
 
     {
         innerStorage = new HashMap<>();
@@ -21,12 +18,16 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public Film save(Film film) {
+        if (film.getId() == null) {
+            film.setId(currentId);
+            currentId++;
+        }
         innerStorage.put(film.getId(), film);
         return film;
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(int id) {
         innerStorage.remove(id);
     }
 
@@ -42,24 +43,27 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public boolean exists(long id) {
+    public boolean exists(int id) {
         return innerStorage.containsKey(id);
     }
 
     @Override
-    public Film findById(long id) {
+    public Film findById(int id) {
         return innerStorage.get(id);
     }
 
     @Override
-    public long getCurrentId() {
-        return currentId;
+    public void addLike(Integer filmId, Integer userId) {
+
     }
 
     @Override
-    public void incrementCurrentId() {
-        currentId++;
+    public void deleteLike(Integer filmId, Integer userId) {
+
     }
 
-
+    @Override
+    public Set<Integer> getLikes(int film_id) {
+        return null;
+    }
 }
