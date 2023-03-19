@@ -58,20 +58,23 @@ class FilmControllerTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/controllers/film-test-data/successfullyUpdateFilm.csv", delimiter = '|')
-    void successfullyUpdateFilm(String fileJson, String expectedResponse) throws Exception {
-        mockMvc.perform(post(basePath)
+    void successfullyUpdateFilm(String fileJson) throws Exception {
+        String response = mockMvc.perform(post(basePath)
                         .content(fileJson)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().is(201));
+                .andExpect(status().is(201))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
         mockMvc.perform(put(basePath)
-                        .content(fileJson)
+                        .content(response)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(containsString(expectedResponse)));
+                .andExpect(MockMvcResultMatchers.content().string(response));
     }
 
     @ParameterizedTest

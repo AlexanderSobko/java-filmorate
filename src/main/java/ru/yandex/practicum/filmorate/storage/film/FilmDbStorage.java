@@ -129,9 +129,13 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     private Mpa getMpaByFilmId(int filmId) {
-        String sql = "SELECT m.mpa_id, m.name FROM mpas AS m" +
-                " JOIN film_mpas AS fm ON m.mpa_id = fm.mpa_id WHERE fm.film_id = ?;";
-        return jdbcTemplate.queryForObject(sql, new MpaRowMapper(), filmId);
+        try {
+            String sql = "SELECT m.mpa_id, m.name FROM mpas AS m" +
+                    " JOIN film_mpas AS fm ON m.mpa_id = fm.mpa_id WHERE fm.film_id = ?;";
+            return jdbcTemplate.queryForObject(sql, new MpaRowMapper(), filmId);
+        } catch (RuntimeException e) {
+        }
+        return null;
     }
 
     private void linkGenre(int filmId, int genreId) {
