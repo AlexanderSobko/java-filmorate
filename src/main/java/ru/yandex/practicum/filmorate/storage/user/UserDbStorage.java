@@ -11,6 +11,7 @@ import ru.yandex.practicum.filmorate.models.User;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -84,5 +85,14 @@ public class UserDbStorage implements UserStorage {
     public Set<Integer> getFriends(int id) {
         String sql = "SELECT friend_id FROM friends WHERE user_id = ?;";
         return new HashSet<>(jdbcTemplate.queryForList(sql, Integer.class, id));
+    }
+
+    @Override
+    public List<User> getCommonFriends(int id, int friendId) {
+        String sql = "SELECT f.friend_id from (SELECT friend_id FROM friends WHERE user_id = ?) AS f\n" +
+                "JOIN (SELECT friend_id FROM friends WHERE user_id = ?) AS s ON f.friend_id = s.friend_id;";
+        return jdbcTemplate.queryForList(sql, Integer.class, id, friendId).stream()
+                .map(this::findById)
+                .collect(Collectors.toList());
     }
 }

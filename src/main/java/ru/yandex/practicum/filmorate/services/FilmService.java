@@ -10,7 +10,6 @@ import ru.yandex.practicum.filmorate.models.Film;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -50,10 +49,7 @@ public class FilmService implements EntityService<Film> {
     }
 
     public List<Film> getTopFilms(String count) {
-        return filmStorage.findAll().stream()
-                .sorted((f, s) -> Integer.compare(s.getLikes().size(), f.getLikes().size()))
-                .limit(Integer.parseInt(count))
-                .collect(Collectors.toList());
+        return filmStorage.getTopFilms(Integer.parseInt(count));
     }
 
     @Override

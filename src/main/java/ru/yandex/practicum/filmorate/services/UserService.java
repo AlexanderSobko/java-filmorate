@@ -9,7 +9,6 @@ import ru.yandex.practicum.filmorate.exceptions.NotExistsException;
 import ru.yandex.practicum.filmorate.models.User;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,12 +68,7 @@ public class UserService implements EntityService<User> {
     public List<User> getCommonFriends(Integer id, Integer friendId) {
         validateNotExists(id);
         validateNotExists(friendId);
-        List<Integer> commonFriends = new ArrayList<>(userStorage.getFriends(id));
-        commonFriends.retainAll(userStorage.getFriends(friendId));
-        return commonFriends.stream()
-                .map(userStorage::findById)
-                .collect(Collectors.toList());
-
+        return userStorage.getCommonFriends(id, friendId);
     }
 
     @Override
