@@ -49,7 +49,7 @@ public class FilmController {
     }
 
     @GetMapping("/popular")
-    public ResponseEntity<List<Film>> getTopFilms(@RequestParam(required = false, defaultValue = "10") String count) {
+    public ResponseEntity<List<Film>> getTopFilms(@RequestParam(defaultValue = "10") String count) {
         return ResponseEntity.ok().body(service.getTopFilms(count));
     }
 }
