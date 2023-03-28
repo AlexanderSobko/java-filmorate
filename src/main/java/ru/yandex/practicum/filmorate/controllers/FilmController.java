@@ -3,7 +3,6 @@ package ru.yandex.practicum.filmorate.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.models.Film;
 import ru.yandex.practicum.filmorate.services.FilmService;
@@ -52,12 +51,5 @@ public class FilmController {
     @GetMapping("/popular")
     public ResponseEntity<List<Film>> getTopFilms(@RequestParam(required = false, defaultValue = "10") String count) {
         return ResponseEntity.ok().body(service.getTopFilms(count));
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException exception) {
-        return ResponseEntity.badRequest()
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .body(exception.getBindingResult().getAllErrors());
     }
 }

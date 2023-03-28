@@ -2,7 +2,6 @@ package ru.yandex.practicum.filmorate.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.models.User;
 import ru.yandex.practicum.filmorate.services.UserService;
@@ -57,10 +56,4 @@ public class UserController {
         return ResponseEntity.ok().body(service.getCommonFriends(id, otherId));
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException exception) {
-        return ResponseEntity.badRequest()
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .body(exception.getBindingResult().getAllErrors());
-    }
 }
