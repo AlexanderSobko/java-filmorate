@@ -1,10 +1,8 @@
 package ru.yandex.practicum.filmorate.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exceptions.NotExistsException;
 import ru.yandex.practicum.filmorate.models.Mpa;
 import ru.yandex.practicum.filmorate.services.MpaService;
@@ -12,30 +10,28 @@ import ru.yandex.practicum.filmorate.services.MpaService;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/mpa")
-public class MpaController extends AbstractController<Mpa, MpaService>{
+public class MpaController {
 
-    @Autowired
-    public MpaController(MpaService service) {
-        super(service);
-    }
+    private final MpaService service;
 
-    @Override
+    @PostMapping
     public ResponseEntity<Mpa> save(Mpa entity) {
         throw new NotExistsException("На данный момент эта функция не доступна!");
     }
 
-    @Override
+    @PutMapping
     public ResponseEntity<Mpa> update(Mpa entity) {
         throw new NotExistsException("На данный момент эта функция не доступна!");
     }
 
-    @Override
+    @GetMapping
     public ResponseEntity<List<Mpa>> getAll() {
         return ResponseEntity.ok().body(service.getAll());
     }
 
-    @Override
+    @GetMapping("/{id}")
     public ResponseEntity<Mpa> getById(@PathVariable Integer id) {
         return ResponseEntity.ok().body(service.get(id));
     }

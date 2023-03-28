@@ -37,6 +37,3 @@ CREATE TABLE IF NOT EXISTS film_genres (
     film_id INT NOT NULL REFERENCES films,
     PRIMARY KEY (genre_id, film_id)
 );
-
-
-

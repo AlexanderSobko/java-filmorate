@@ -1,7 +1,8 @@
 package ru.yandex.practicum.filmorate.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.models.User;
 import ru.yandex.practicum.filmorate.services.UserService;
@@ -10,33 +11,27 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/users")
-public class UserController extends AbstractController<User, UserService> {
+public class UserController {
 
-    @Autowired
-    public UserController(UserService service) {
-        super(service);
-    }
+    private final UserService service;
 
-    @Override
     @PostMapping
     public ResponseEntity<User> save(@Valid @RequestBody User user) {
         return ResponseEntity.status(201).body(service.save(user));
     }
 
-    @Override
     @PutMapping
     public ResponseEntity<User> update(@Valid @RequestBody User user) {
         return ResponseEntity.ok().body(service.update(user));
     }
 
-    @Override
     @GetMapping
     public ResponseEntity<List<User>> getAll() {
         return ResponseEntity.ok().body(service.getAll());
     }
 
-    @Override
     @GetMapping("/{id}")
     public ResponseEntity<User> getById(@PathVariable Integer id) {
         return ResponseEntity.ok().body(service.get(id));
@@ -62,4 +57,10 @@ public class UserController extends AbstractController<User, UserService> {
         return ResponseEntity.ok().body(service.getCommonFriends(id, otherId));
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException exception) {
+        return ResponseEntity.badRequest()
+                .header("Content-Type", "application/json;charset=UTF-8")
+                .body(exception.getBindingResult().getAllErrors());
+    }
 }
