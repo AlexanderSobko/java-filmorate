@@ -2,8 +2,10 @@ package ru.yandex.practicum.filmorate.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.exceptions.NotExistsException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.yandex.practicum.filmorate.models.Mpa;
 import ru.yandex.practicum.filmorate.services.MpaService;
 
@@ -15,16 +17,6 @@ import java.util.List;
 public class MpaController {
 
     private final MpaService service;
-
-    @PostMapping
-    public ResponseEntity<Mpa> save(Mpa entity) {
-        throw new NotExistsException("На данный момент эта функция не доступна!");
-    }
-
-    @PutMapping
-    public ResponseEntity<Mpa> update(Mpa entity) {
-        throw new NotExistsException("На данный момент эта функция не доступна!");
-    }
 
     @GetMapping
     public ResponseEntity<List<Mpa>> getAll() {
