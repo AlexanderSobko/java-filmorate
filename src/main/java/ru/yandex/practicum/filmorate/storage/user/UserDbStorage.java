@@ -92,7 +92,7 @@ public class UserDbStorage implements UserStorage {
                 "RIGHT JOIN users ON friends.friend_id= users.user_id " +
                 "LEFT JOIN friends AS f ON f.user_id = users.user_id " +
                 "WHERE friends.user_id = ? " +
-                "GROUP BY f.user_id " +
+                "GROUP BY users.user_id " +
                 "ORDER BY f.user_id DESC;";
         return jdbcTemplate.query(sql, new UserRowMapper(), id);
     }
