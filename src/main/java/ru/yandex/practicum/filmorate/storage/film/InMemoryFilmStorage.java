@@ -10,9 +10,8 @@ import java.util.stream.Collectors;
 public class InMemoryFilmStorage implements FilmStorage {
 
     private static int currentId = 1;
-
     private final Map<Integer, Film> innerStorage = new HashMap<>();
-
+    
     @Override
     public List<Film> getTopFilms(int count) {
         return findAll().stream()
