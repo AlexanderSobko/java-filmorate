@@ -11,6 +11,7 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     private static int currentId = 1;
     private final Map<Integer, Film> innerStorage = new HashMap<>();
+
     @Override
     public Film save(Film film) {
         if (film.getId() == null) {
