@@ -11,11 +11,7 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     private static int currentId = 1;
 
-    private final Map<Integer, Film> innerStorage;
-
-    {
-        innerStorage = new HashMap<>();
-    }
+    private final Map<Integer, Film> innerStorage = new HashMap<>();
 
     @Override
     public Film save(Film film) {
@@ -64,7 +60,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Set<Integer> getLikes(int film_id) {
+    public Set<Integer> getLikes(int filmId) {
         return null;
     }
 
