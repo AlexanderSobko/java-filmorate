@@ -71,9 +71,4 @@ public class InMemoryFilmStorage implements FilmStorage {
         film.setLikes(likes);
     }
 
-    @Override
-    public Set<Integer> getLikes(int filmId) {
-        return new HashSet<>(innerStorage.get(filmId).getLikes());
-    }
-
 }

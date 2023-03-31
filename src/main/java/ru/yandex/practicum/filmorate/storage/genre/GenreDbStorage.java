@@ -14,21 +14,6 @@ public class GenreDbStorage implements GenreStorage {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public Genre save(Genre entity) {
-        return null;
-    }
-
-    @Override
-    public void delete(int id) {
-
-    }
-
-    @Override
-    public Genre update(Genre entity) {
-        return null;
-    }
-
-    @Override
     public List<Genre> findAll() {
         String sql = "SELECT * FROM genres";
         return jdbcTemplate.query(sql, new GanreRowMapper());
