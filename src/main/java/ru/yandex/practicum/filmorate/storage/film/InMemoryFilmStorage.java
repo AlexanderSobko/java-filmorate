@@ -14,14 +14,6 @@ public class InMemoryFilmStorage implements FilmStorage {
     private final Map<Integer, Film> innerStorage = new HashMap<>();
 
     @Override
-    public Film save(Film film) {
-        if (film.getId() == null)
-            film.setId(currentId++);
-        innerStorage.put(film.getId(), film);
-        return film;
-    }
-
-    @Override
     public void delete(int id) {
         innerStorage.remove(id);
     }
@@ -30,6 +22,14 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Film update(Film film) {
         innerStorage.put(film.getId(), film);
         return innerStorage.get(film.getId());
+    }
+
+    @Override
+    public Film save(Film film) {
+        if (film.getId() == null)
+            film.setId(currentId++);
+        innerStorage.put(film.getId(), film);
+        return film;
     }
 
     @Override
