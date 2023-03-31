@@ -16,10 +16,8 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public Film save(Film film) {
-        if (film.getId() == null) {
-            film.setId(currentId);
-            currentId++;
-        }
+        film.setId(currentId);
+        currentId++;
         innerStorage.put(film.getId(), film);
         return film;
     }
