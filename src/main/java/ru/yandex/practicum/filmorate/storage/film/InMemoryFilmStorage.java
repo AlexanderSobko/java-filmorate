@@ -14,7 +14,18 @@ public class InMemoryFilmStorage implements FilmStorage {
     private final Map<Integer, Film> innerStorage = new HashMap<>();
 
     @Override
-    public void delete(int id) {innerStorage.remove(id);}
+    public List<Film> getTopFilms(int count) {
+        return findAll().stream()
+                .sorted((f, s) -> Integer.compare(s.getLikes().size(), f.getLikes().size()))
+                .limit(count)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void delete(int id) {
+        innerStorage.remove(id);
+    }
+
 
     @Override
     public Film save(Film film) {
@@ -66,11 +77,4 @@ public class InMemoryFilmStorage implements FilmStorage {
         return new HashSet<>(innerStorage.get(filmId).getLikes());
     }
 
-    @Override
-    public List<Film> getTopFilms(int count) {
-        return findAll().stream()
-                .sorted((f, s) -> Integer.compare(s.getLikes().size(), f.getLikes().size()))
-                .limit(count)
-                .collect(Collectors.toList());
-    }
 }
