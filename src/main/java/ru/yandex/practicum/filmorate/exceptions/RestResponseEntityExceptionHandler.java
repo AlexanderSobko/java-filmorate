@@ -20,9 +20,9 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private final HttpHeaders headers;
+    private static final HttpHeaders headers;
 
-    {
+    static {
         headers = new HttpHeaders();
         headers.add("Content-Type", "application/json;charset=UTF-8");
     }
