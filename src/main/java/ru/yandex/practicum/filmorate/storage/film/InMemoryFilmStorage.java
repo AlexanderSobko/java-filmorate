@@ -19,12 +19,6 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Film update(Film film) {
-        innerStorage.put(film.getId(), film);
-        return innerStorage.get(film.getId());
-    }
-
-    @Override
     public Film save(Film film) {
         if (film.getId() == null)
             film.setId(currentId++);
@@ -40,6 +34,12 @@ public class InMemoryFilmStorage implements FilmStorage {
     @Override
     public boolean exists(int id) {
         return innerStorage.containsKey(id);
+    }
+
+    @Override
+    public Film update(Film film) {
+        innerStorage.put(film.getId(), film);
+        return innerStorage.get(film.getId());
     }
 
     @Override
