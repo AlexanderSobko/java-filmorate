@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import ru.yandex.practicum.filmorate.validation.FutureAfterDate;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
