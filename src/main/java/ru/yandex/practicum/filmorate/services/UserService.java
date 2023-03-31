@@ -10,7 +10,6 @@ import ru.yandex.practicum.filmorate.models.User;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -78,9 +77,7 @@ public class UserService implements EntityService<User> {
 
     public List<User> getFriendList(Integer id) {
         validateNotExists(id);
-        return userStorage.getFriends(id).stream()
-                .map(this::get)
-                .collect(Collectors.toList());
+        return userStorage.getFriends(id);
     }
 
     @Override

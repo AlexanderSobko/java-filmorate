@@ -8,10 +8,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.models.User;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -21,8 +18,9 @@ public class UserDbStorage implements UserStorage {
     private final JdbcTemplate jdbcTemplate;
     @Override
     public User save(User entity) {
-        final String sql = String.format("INSERT INTO users (email,login,name,birthday) VALUES ('%s','%s','%s','%s')",
-                entity.getEmail(), entity.getLogin(), entity.getName(), entity.getBirthday());
+        final String sql = String.format("INSERT INTO users (email,login,name,birthday) VALUES ('%s','%s','%s','%s'); ",
+                entity.getEmail(), entity.getLogin(), entity.getName(),
+                entity.getBirthday());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(
                 connection -> connection.prepareStatement(sql, new String[] {"user_id"}), keyHolder);
@@ -49,9 +47,11 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public List<User> findAll() {
-        String sql = "SELECT * FROM users;";
+        String sql = "SELECT users.*,GROUP_CONCAT(friends.friend_id) AS friend_list " +
+                "FROM friends " +
+                "RIGHT JOIN users ON friends.user_id = users.user_id " +
+                "GROUP BY users.user_id;";
         List<User> users = jdbcTemplate.query(sql, new UserRowMapper());
-        users.forEach(u -> u.setFriends(getFriends(u.getId())));
         return users;
     }
 
@@ -63,9 +63,12 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User findById(int id) {
-        String sql = "SELECT * FROM users WHERE user_id = ?;";
+        String sql = "SELECT users.*, GROUP_CONCAT(friends.friend_id) AS friend_list " +
+                "FROM friends " +
+                "RIGHT JOIN users ON friends.user_id = users.user_id " +
+                "WHERE users.user_id = ? " +
+                "GROUP BY friends.user_id;";
         User user =  jdbcTemplate.queryForObject(sql, new UserRowMapper(), id);
-        user.setFriends(getFriends(id));
         return user;
     }
 
@@ -82,17 +85,23 @@ public class UserDbStorage implements UserStorage {
     }
 
     @Override
-    public Set<Integer> getFriends(int id) {
-        String sql = "SELECT friend_id FROM friends WHERE user_id = ?;";
-        return new HashSet<>(jdbcTemplate.queryForList(sql, Integer.class, id));
+    public List<User> getFriends(int id) {
+        String sql = "SELECT users.*, GROUP_CONCAT(f.friend_id) AS friend_list " +
+                "FROM friends " +
+                "RIGHT JOIN users ON friends.friend_id= users.user_id " +
+                "LEFT JOIN friends AS f ON f.user_id = users.user_id " +
+                "WHERE friends.user_id = ? " +
+                "GROUP BY f.user_id " +
+                "ORDER BY f.user_id DESC;";
+        return jdbcTemplate.query(sql, new UserRowMapper(), id);
     }
 
     @Override
     public List<User> getCommonFriends(int id, int friendId) {
-        String sql = "SELECT f.friend_id from (SELECT friend_id FROM friends WHERE user_id = ?) AS f\n" +
-                "JOIN (SELECT friend_id FROM friends WHERE user_id = ?) AS s ON f.friend_id = s.friend_id;";
-        return jdbcTemplate.queryForList(sql, Integer.class, id, friendId).stream()
-                .map(this::findById)
-                .collect(Collectors.toList());
+        String sql = "SELECT users.*, NULL AS friend_list from friends AS f1 " +
+                "JOIN friends AS f2 ON f1.friend_id= f2.friend_id " +
+                "JOIN users ON users.user_id = f1.friend_id " +
+                "WHERE  (f1.user_id = ? AND f2.user_id = ?);";
+        return jdbcTemplate.query(sql, new UserRowMapper(), id, friendId);
     }
 }

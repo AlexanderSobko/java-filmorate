@@ -64,16 +64,16 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public Set<Integer> getFriends(int id) {
-        return new HashSet<>(innerStorage.get(id).getFriends());
+    public List<User> getFriends(int id) {
+        return innerStorage.get(id).getFriends().stream()
+                .map(this::findById)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<User> getCommonFriends(int id, int friendId) {
-        List<Integer> commonFriends = new ArrayList<>(getFriends(id));
+        List<User> commonFriends = new ArrayList<>(getFriends(id));
         commonFriends.retainAll(getFriends(friendId));
-        return commonFriends.stream()
-                .map(this::findById)
-                .collect(Collectors.toList());
+        return commonFriends;
     }
 }

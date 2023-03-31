@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,7 +25,7 @@ public class User {
     String name;
     @Past(message = "Дата рождения не может быть в будущем!")
     LocalDate birthday;
-    Set<Integer> friends = new HashSet<>();
+    Set<Integer> friends;
 
     public Integer getId() {
         return id;
