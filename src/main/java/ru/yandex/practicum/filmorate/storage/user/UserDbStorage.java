@@ -16,6 +16,7 @@ import java.util.List;
 public class UserDbStorage implements UserStorage {
 
     private final JdbcTemplate jdbcTemplate;
+
     @Override
     public User save(User entity) {
         final String sql = String.format("INSERT INTO users (email,login,name,birthday) VALUES ('%s','%s','%s','%s'); ",

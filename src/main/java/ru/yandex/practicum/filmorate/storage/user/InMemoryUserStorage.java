@@ -11,11 +11,8 @@ public class InMemoryUserStorage implements UserStorage {
 
     private static Integer currentId = 1;
 
-    private final Map<Integer, User> innerStorage;
+    private final Map<Integer, User> innerStorage = new HashMap<>();
 
-    {
-        innerStorage = new HashMap<>();
-    }
     @Override
     public User save(User user) {
         if (user.getId() == null) {

@@ -16,5 +16,4 @@ public interface Storage<T> {
 
     T findById(int id);
 
-
 }
