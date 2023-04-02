@@ -42,8 +42,8 @@ public class FilmRowMapper implements RowMapper<Film> {
             return Arrays.stream(data.split(","))
                     .map(genre -> {
                         String[] gen = genre.split("@");
-                        int genre_id = Integer.parseInt(gen[0]);
-                        return new Genre(genre_id, gen[1]);
+                        int genreId = Integer.parseInt(gen[0]);
+                        return new Genre(genreId, gen[1]);
                     }).collect(Collectors.toSet());
         }
         return new HashSet<>();
