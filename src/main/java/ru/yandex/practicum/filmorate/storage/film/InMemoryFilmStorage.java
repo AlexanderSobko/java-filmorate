@@ -3,31 +3,45 @@ package ru.yandex.practicum.filmorate.storage.film;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.models.Film;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
 
-    private static Long currentId = 1L;
+    private static int currentId = 1;
+    private final Map<Integer, Film> innerStorage = new HashMap<>();
 
-    private final Map<Long, Film> innerStorage;
-
-    {
-        innerStorage = new HashMap<>();
+    @Override
+    public List<Film> getTopFilms(int count) {
+        return findAll().stream()
+                .sorted((f, s) -> Integer.compare(s.getLikes().size(), f.getLikes().size()))
+                .limit(count)
+                .collect(Collectors.toList());
     }
 
     @Override
+    public void delete(int id) {
+        innerStorage.remove(id);
+    }
+
+
+    @Override
     public Film save(Film film) {
+        if (film.getId() == null)
+            film.setId(currentId++);
         innerStorage.put(film.getId(), film);
         return film;
     }
 
     @Override
-    public void delete(long id) {
-        innerStorage.remove(id);
+    public List<Film> findAll() {
+        return new ArrayList<>(innerStorage.values());
+    }
+
+    @Override
+    public boolean exists(int id) {
+        return innerStorage.containsKey(id);
     }
 
     @Override
@@ -37,29 +51,24 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public List<Film> findAll() {
-        return new ArrayList<>(innerStorage.values());
-    }
-
-    @Override
-    public boolean exists(long id) {
-        return innerStorage.containsKey(id);
-    }
-
-    @Override
-    public Film findById(long id) {
+    public Film findById(int id) {
         return innerStorage.get(id);
     }
 
     @Override
-    public long getCurrentId() {
-        return currentId;
+    public void addLike(Integer filmId, Integer userId) {
+        Film film = innerStorage.get(filmId);
+        Set<Integer> likes = new HashSet<>(film.getLikes());
+        likes.add(userId);
+        film.setLikes(likes);
     }
 
     @Override
-    public void incrementCurrentId() {
-        currentId++;
+    public void deleteLike(Integer filmId, Integer userId) {
+        Film film = innerStorage.get(filmId);
+        Set<Integer> likes = new HashSet<>(film.getLikes());
+        likes.remove(userId);
+        film.setLikes(likes);
     }
-
 
 }

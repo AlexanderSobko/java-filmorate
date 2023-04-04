@@ -1,1 +1,1 @@
-{"id":1000,"name":"Film Updated","description":"New film update description","releaseDate":"1989-04-17","duration":190}|{"id":1000,"name":"Film Updated","description":"New film update description","releaseDate":"1989-04-17","duration":190,"likes":[]}
+{"name":"Film Updated","description":"New film update description","releaseDate":"1989-04-17","duration":190,"mpa":{"id":1}}|{"name":"Film Updated","description":"New film update description","releaseDate":"1989-04-17","duration":190,"likes":[],"mpa":null}

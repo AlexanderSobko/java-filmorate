@@ -3,29 +3,28 @@ package ru.yandex.practicum.filmorate.storage.user;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.models.User;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class InMemoryUserStorage implements UserStorage {
 
-    private static Long currentId = 1L;
+    private static Integer currentId = 1;
 
-    private final Map<Long, User> innerStorage;
+    private final Map<Integer, User> innerStorage = new HashMap<>();
 
-    {
-        innerStorage = new HashMap<>();
-    }
     @Override
     public User save(User user) {
+        if (user.getId() == null) {
+            user.setId(currentId);
+            currentId++;
+        }
         innerStorage.put(user.getId(), user);
         return innerStorage.get(user.getId());
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(int id) {
         innerStorage.remove(id);
     }
 
@@ -40,22 +39,38 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public boolean exists(long id) {
+    public boolean exists(int id) {
         return innerStorage.containsKey(id);
     }
 
     @Override
-    public User findById(long id) {
+    public User findById(int id) {
         return innerStorage.get(id);
     }
 
     @Override
-    public long getCurrentId() {
-        return currentId;
+    public void addFriend(Integer id, Integer friendId) {
+        User user = findById(id);
+        user.addFriend(friendId);
     }
 
     @Override
-    public void incrementCurrentId() {
-        currentId++;
+    public void deleteFriend(Integer id, Integer friendId) {
+        User user = findById(id);
+        user.deleteFriend(friendId);
+    }
+
+    @Override
+    public List<User> getFriends(int id) {
+        return innerStorage.get(id).getFriends().stream()
+                .map(this::findById)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> getCommonFriends(int id, int friendId) {
+        List<User> commonFriends = new ArrayList<>(getFriends(id));
+        commonFriends.retainAll(getFriends(friendId));
+        return commonFriends;
     }
 }
